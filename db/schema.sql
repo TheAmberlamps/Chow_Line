@@ -1,0 +1,11 @@
+DROP DATABASE IF EXISTS grocery_db;
+CREATE DATABASE grocery_db;
+USE grocery_db;
+CREATE TABLE users(
+  id int NOT NULL AUTO_INCREMENT,
+  user_name VARCHAR(255) NOT NULL,
+  pass VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  address VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id)
+  );
