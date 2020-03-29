@@ -1,3 +1,9 @@
 body {
-  background-color: lightblue;
+  background-image: url("/images/supermarket_main.jpg");
+  background-repeat: no-repeat;
+  /* background-position: center center; */
+}
+
+#layer {
+  background-color: rgba(173, 216, 230, 0.7);
 }

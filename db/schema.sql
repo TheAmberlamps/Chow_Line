@@ -13,7 +13,8 @@ CREATE TABLE groceries(
   id int NOT NULL AUTO_INCREMENT,
   name VARCHAR(255) NOT NULL,
   type VARCHAR(255) NOT NULL,
-  price INT NOT NULL,
+  price DECIMAL(4,2) NOT NULL,
   inventory INT NOT NULL,
+  image VARCHAR(255) NOT NULL
   PRIMARY KEY (id)
 );

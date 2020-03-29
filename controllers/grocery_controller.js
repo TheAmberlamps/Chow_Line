@@ -6,21 +6,13 @@ var router = express.Router();
 var grocery = require("../models/grocery.js");
 
 router.get("/", function(req, res) {
-  grocery.selectAllUsers(function(data) {
-    var hbsObject1 = {
-      users: data
-    };
-    console.log(hbsObject1);
-    // res.render("index", hbsObject1);
-  });
   grocery.selectAllFood(function(data) {
-    var hbsObject2 = {
+    var hbsObject = {
       groceries: data
     };
-    console.log(hbsObject2);
-    // res.render("index", hbsObject2);
+    console.log(hbsObject);
+    res.render("index", hbsObject);
   });
-  res.render("index");
 });
 
 module.exports = router;

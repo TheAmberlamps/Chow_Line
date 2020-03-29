@@ -1,1 +1,10 @@
 <h1>Well, this is a start.</h1>
+
+<ul>
+  {{#each groceries}}
+      {{ name }}
+      {{ price }}
+      {{!-- works like a charm, images are enormous though so disabled for the moment --}}
+      {{!-- <img src={{image}}> --}}
+  {{/each}}
+</ul>
