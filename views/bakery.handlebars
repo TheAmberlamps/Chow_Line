@@ -1,0 +1,13 @@
+{{#each groceries}}
+  {{#ifCond type "===" "Bakery"}}
+    <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src={{image}} alt={{name}} + " image">
+    <div class="card-body">
+      <h5 class="card-title">{{name}}</h5>
+      <p class="card-text">$ {{price}}</p>
+      <p class="card-text">In stock: {{inventory}}</p>
+      <a href="#" class="btn btn-primary">Add to cart</a>
+    </div>
+  </div>
+  {{/ifCond}}
+  {{/each}}
