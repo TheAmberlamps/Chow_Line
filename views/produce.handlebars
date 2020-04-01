@@ -1,10 +1,12 @@
 {{#each groceries}}
   {{#ifCond type "===" "Produce"}}
     <div class="card" style="width: 18rem;">
-    <img class="card-img-top" src={{image}} alt={{name}} + " image">
+      <div class="imgCont d-flex">
+    <img class="card-img-top my-atuo" src={{image}} alt={{name}} + " image">
+      </div>
     <div class="card-body">
       <h5 class="card-title">{{name}}</h5>
-      <p class="card-text">$ {{price}}</p>
+      <p class="card-text">Price: $ {{price}}</p>
       <p class="card-text">In stock: {{inventory}}</p>
       <a href="#" class="btn btn-primary">Add to cart</a>
     </div>

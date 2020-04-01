@@ -4,6 +4,20 @@ body {
   /* background-position: center center; */
 }
 
+.imgCont {
+  width: 286px;
+  height: 286px;
+}
+
+img {
+  background-color: white;
+}
+
 #layer {
   background-color: rgba(173, 216, 230, 0.7);
+}
+
+.row {
+  justify-content: center;
+  align-content: center;
 }
