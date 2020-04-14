@@ -20,7 +20,7 @@ var orm = {
       "(" +
       dest +
       ")" +
-      SELECT +
+      "SELECT" +
       itemID +
       " FROM " +
       tabla +
