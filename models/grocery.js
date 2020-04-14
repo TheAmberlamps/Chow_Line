@@ -16,6 +16,12 @@ var grocery = {
       cb(res);
     });
   },
+  popCart: function (id, cb) {
+    orm.insertOne("cart", "grocery_id", id, "groceries", function (res) {
+      console.log("popCart running in models");
+      cb(res);
+    });
+  },
 };
 
 module.exports = grocery;

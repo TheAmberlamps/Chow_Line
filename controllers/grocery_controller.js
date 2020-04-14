@@ -85,4 +85,12 @@ router.get("/cart", function (req, res) {
   });
 });
 
+router.post("/api/groceries", function (req, res) {
+  console.log("router.post running in controllers");
+  grocery.popCart(req.id, function (result) {
+    console.log(result);
+    res.json({ id: result.id });
+  });
+});
+
 module.exports = router;
