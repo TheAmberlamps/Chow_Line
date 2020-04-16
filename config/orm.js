@@ -8,23 +8,16 @@ var orm = {
       cb(res);
     });
   },
-  insertOne: function (table, dest, itemID, tabla, cb) {
-    console.log("insertOne ORM running:");
-    console.log("table: " + table);
-    console.log("destination: " + dest);
+  insertOne: function (itemID, amt, cb) {
+    console.log("insertOne ORM model running");
     console.log("item ID: " + itemID);
-    console.log("tabla: " + tabla);
+    console.log("amount: " + amt);
     var queryString =
-      "INSERT INTO " +
-      table +
-      "(" +
-      dest +
-      ")" +
-      "SELECT" +
+      "INSERT INTO cart (grocery_id, amt) VALUES (" +
       itemID +
-      " FROM " +
-      tabla +
-      ";";
+      ", " +
+      amt +
+      ");";
     connection.query(queryString, function (err, res) {
       if (err) throw err;
       cb(res);

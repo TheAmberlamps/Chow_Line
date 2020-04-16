@@ -16,9 +16,9 @@ var grocery = {
       cb(res);
     });
   },
-  popCart: function (id, cb) {
-    orm.insertOne("cart", "grocery_id", id, "groceries", function (res) {
-      console.log("popCart running in models");
+  popCart: function (id, amt, cb) {
+    console.log("popCart running in models");
+    orm.insertOne(id, amt, function (res) {
       cb(res);
     });
   },

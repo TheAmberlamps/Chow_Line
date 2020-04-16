@@ -9,6 +9,10 @@ body {
   height: 286px;
 }
 
+.id_cont {
+  display: none;
+}
+
 img {
   background-color: white;
 }

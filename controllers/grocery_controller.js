@@ -2,7 +2,7 @@ var express = require("express");
 
 var router = express.Router();
 
-// Import the model (burger.js) to use its database functions.
+// Import the model (grocery.js) to use its database functions.
 var grocery = require("../models/grocery.js");
 
 router.get("/", function (req, res) {
@@ -87,8 +87,10 @@ router.get("/cart", function (req, res) {
 
 router.post("/api/groceries", function (req, res) {
   console.log("router.post running in controllers");
-  grocery.popCart(req.id, function (result) {
-    console.log(result);
+  console.log("request: " + req.body);
+  console.log("result: " + res);
+  grocery.popCart(req.body.id, req.body.amt, function (result) {
+    console.log("result: " + result);
     res.json({ id: result.id });
   });
 });
