@@ -5,26 +5,23 @@
     <img class="card-img-top my-auto" src={{image}} alt={{name}} + " image">
       </div>
     <div class="card-body">
-      <form class="addCart" action="/api/groceries" method="POST">
       <h5 class="card-title">{{name}}</h5>
       <p class="card-text">Price: ${{price}}</p>
       <p class="card-text">In stock: {{inventory}}</p>
-      <p class="id_cont" itemid={{id}}></p>
       <label for="amt">Amount: </label>
-      <input type="number" id="amt" min="1" max={{inventory}} value="1"/>
-      <button type="submit" class="btn btn-primary">Add to cart</a>
-      </form>
+      <input type="number" class="amt" min="1" max={{inventory}} value="1"/>
+      <button class="btn btn-primary sub" data-id="{{id}}">Add to cart</a>
     </div>
   </div>
   {{/ifCond}}
   {{/each}}
 
   <script>
-    $(".addCart").on("submit", function(event) {
-      event.preventDefault();
+    $(".sub").on("click", function(event) {
+      let amt = document.querySelector(".amt").value
       var grocery = {
-        id: $(".id_cont").itemid,
-        amt: $("#amt").val()
+        id: $(this).data("id"),
+        amt: amt
       };
       console.log("grocery id: " + grocery.id);
       console.log("Amount: " + grocery.amt);
