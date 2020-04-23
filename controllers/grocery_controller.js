@@ -10,7 +10,6 @@ router.get("/", function (req, res) {
     var hbsObject = {
       groceries: data,
     };
-    console.log(hbsObject);
     res.render("index", hbsObject);
   });
 });
@@ -20,7 +19,6 @@ router.get("/produce", function (req, res) {
     var hbsObject = {
       groceries: data,
     };
-    console.log(hbsObject);
     res.render("produce", hbsObject);
   });
 });
@@ -30,7 +28,6 @@ router.get("/dairy", function (req, res) {
     var hbsObject = {
       groceries: data,
     };
-    console.log(hbsObject);
     res.render("dairy", hbsObject);
   });
 });
@@ -40,7 +37,6 @@ router.get("/meat&seafood", function (req, res) {
     var hbsObject = {
       groceries: data,
     };
-    console.log(hbsObject);
     res.render("meat", hbsObject);
   });
 });
@@ -50,7 +46,6 @@ router.get("/pantry", function (req, res) {
     var hbsObject = {
       groceries: data,
     };
-    console.log(hbsObject);
     res.render("pantry", hbsObject);
   });
 });
@@ -60,7 +55,6 @@ router.get("/bakery", function (req, res) {
     var hbsObject = {
       groceries: data,
     };
-    console.log(hbsObject);
     res.render("bakery", hbsObject);
   });
 });
@@ -70,7 +64,6 @@ router.get("/frozen", function (req, res) {
     var hbsObject = {
       groceries: data,
     };
-    console.log(hbsObject);
     res.render("frozen", hbsObject);
   });
 });
@@ -80,17 +73,20 @@ router.get("/cart", function (req, res) {
     var hbsObject = {
       purchases: data,
     };
-    console.log(hbsObject);
     res.render("cart", hbsObject);
   });
 });
 
-router.post("/api/groceries", function (req, res) {
-  console.log("router.post running in controllers");
-  console.log("request: " + req.body);
-  console.log("result: " + res);
+router.post("/api/cart", function (req, res) {
   grocery.popCart(req.body.id, req.body.amt, function (result) {
-    console.log("result: " + result);
+    console.log("Result: " + result);
+    res.json({ id: result.id });
+  });
+});
+
+router.post("/api/groceries", function (req, res) {
+  grocery.updateGroc(req.body.amt, req.body.id, function (result) {
+    console.log("Result: " + result);
     res.json({ id: result.id });
   });
 });

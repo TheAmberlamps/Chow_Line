@@ -17,8 +17,17 @@ var grocery = {
     });
   },
   popCart: function (id, amt, cb) {
-    console.log("popCart running in models");
     orm.insertOne(id, amt, function (res) {
+      cb(res);
+    });
+  },
+  updateGroc: function (amt, id, cb) {
+    orm.updateOne(amt, id, function (res) {
+      cb(res);
+    });
+  },
+  getPrice: function (id, cb) {
+    orm.getPrice(id, function (res) {
       cb(res);
     });
   },

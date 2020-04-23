@@ -29,6 +29,10 @@
       };
       console.log("grocery id: " + grocery.id);
       console.log("AJAX begins");
+    $.ajax("/api/cart", {
+      type: "POST",
+      data: grocery
+    }).then
     $.ajax("/api/groceries", {
       type: "POST",
       data: grocery
