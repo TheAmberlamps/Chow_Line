@@ -7,7 +7,7 @@
     <img class="card-img-top my-auto" src={{image}} alt={{name}} + " image">
       </div>
     <div class="card-body">
-      <form class="wrap" data-id="{{id}}">
+      <form class="wrap" data-id="{{id}}" data-inv="{{inventory}}">
       <h5 class="card-title">{{name}}</h5>
       <p class="card-text">Price: ${{price}}</p>
       <p class="card-text">In stock: {{inventory}}</p>
@@ -21,24 +21,3 @@
   {{/ifCond}}
   {{/each}}
 </div>
-
-  <script>
-    $(".wrap").on("submit", function(event) {
-      event.preventDefault();
-      var grocery = {
-        id: $(this).data("id"),
-        amt: $(this).context.elements[0].value
-      };
-      console.log("grocery id: " + grocery.id);
-      console.log("AJAX begins");
-    $.ajax("/api/groceries", {
-      type: "POST",
-      data: grocery
-    }).then(
-      function() {
-        console.log("hopefully pushed some groceries to cart");
-        location.reload();
-      }
-    )
-    })
-  </script>
