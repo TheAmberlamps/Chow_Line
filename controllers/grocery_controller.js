@@ -69,24 +69,27 @@ router.get("/frozen", function (req, res) {
 });
 
 router.get("/cart", function (req, res) {
+  var hbsObject = {
+    purchases: null,
+    groceries: null,
+  };
   grocery.getCart(function (data) {
-    var hbsObject = {
-      purchases: data,
-    };
+    hbsObject.purchases = data;
+  });
+  grocery.selectAllFood(function (data) {
+    hbsObject.groceries = data;
     res.render("cart", hbsObject);
   });
 });
 
 router.post("/api/cart", function (req, res) {
   grocery.popCart(req.body.id, req.body.amt, function (result) {
-    console.log("Result: " + result);
     res.json({ id: result.id });
   });
 });
 
 router.post("/api/groceries", function (req, res) {
   grocery.updateGroc(req.body.amt, req.body.id, function (result) {
-    console.log("Result: " + result);
     res.json({ id: result.id });
   });
 });
