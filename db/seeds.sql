@@ -30,5 +30,9 @@ INSERT INTO groceries (name, type, price, inventory, image) VALUES ("Fish fillet
 INSERT INTO groceries (name, type, price, inventory, image) VALUES ("Peas", "Frozen", 6.75, 9, "/images/peas.jpg");
 INSERT INTO groceries (name, type, price, inventory, image) VALUES ("Fries", "Frozen", 5.89, 14, "/images/fries.jpg");
 INSERT INTO groceries (name, type, price, inventory, image) VALUES ("Ice cream", "Frozen", 6.50, 7, "/images/ice_cream.jpg");
-
-INSERT INTO groceries (name, type, price, inventory, image) VALUES ();
+INSERT INTO groceries (name, type, price, inventory, image) VALUES ("Crackers", "Pantry", 3.25, 8, "/images/crackers.jpg");
+INSERT INTO groceries (name, type, price, inventory, image) VALUES ("Dill Pickle Chips", "Pantry", 22, 2.75, "/images/pickle_chips.jpeg");
+INSERT INTO groceries (name, type, price, inventory, image) VALUES ("Fruit gummies", "Pantry", 5.10, 14, "/images/gummies.jpg");
+INSERT INTO groceries (name, type, price, inventory, image) VALUES ("Corn nuts", "Pantry", 1.89, 9, "/images/corn_nuts.jpg");
+INSERT INTO groceries (name, type, price, inventory, image) VALUES ("Oreos", "Pantry", 4.20, 13, "/images/oreos.jpg");
+INSERT INTO groceries (name, type, price, inventory, image) VALUES ("Instant noodles", "Pantry", 1.50, 33, "/images/noodles.jpg");
