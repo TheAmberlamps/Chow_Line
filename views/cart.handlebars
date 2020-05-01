@@ -1,6 +1,15 @@
 {{#each purchases}}
   <div>{{grocery_id}}, {{amt}}</div>
 {{/each}}
-{{#each groceries}}
-  <div>{{name}}, {{price}}</div>
-{{/each}}
+
+<script>
+  console.log({{{json purchases}}})
+ // let sum = function(table, price, amt) {
+  //  for (let i=0; i < table.length; i++) {
+   //  price * amt
+   //  console.log(price)
+   // }
+   // console.log(table);
+ // }
+ // sum(document.groceries, document.groceries.price, document.purchases.amt);
+</script>

@@ -78,6 +78,7 @@ router.get("/cart", function (req, res) {
   });
   grocery.selectAllFood(function (data) {
     hbsObject.groceries = data;
+    console.log(hbsObject.groceries[1].price);
     res.render("cart", hbsObject);
   });
 });
