@@ -1,15 +1,35 @@
-{{#each purchases}}
-  <div>{{grocery_id}}, {{amt}}</div>
-{{/each}}
+<div id="receipt">
+  <ul id="cartList">
+  </ul>
+</div>
 
 <script>
-  console.log({{{json purchases}}})
- // let sum = function(table, price, amt) {
-  //  for (let i=0; i < table.length; i++) {
-   //  price * amt
-   //  console.log(price)
-   // }
-   // console.log(table);
- // }
- // sum(document.groceries, document.groceries.price, document.purchases.amt);
+  $(document).ready();
+  let list = document.getElementById("cartList")
+  let listText = "";
+  let listCont = [];
+  //console.log({{{json purchases}}})
+  //console.log({{{json groceries}}})
+  let cartItems = {{{json purchases}}}
+  let inventory = {{{json groceries}}}
+  //console.log("cartItems: " + cartItems)
+  
+  for (let i=0; i < cartItems.length; i++) {
+    for (let x=0; x < inventory.length; x++) {
+      if (cartItems[i].grocery_id === inventory[x].id){
+        let item = { 
+          name: inventory[x].name,
+          amt: cartItems[i].amt,
+          price: (inventory[x].price * cartItems[i].amt)
+        }
+        //console.log(item.name + " x " + item.amt + " : " + item.price)
+        listCont.push(item);
+      }
+    }
+  }
+  console.log(listCont)
+  //string.concat doesn't change the initial string. Going to have to find another way to pull this off.
+  listCont.forEach(object => listText.concat("<li>" + object.name + " x " + object.amt + " : " + object.price + "</li>"))
+  console.log(listText)
+  list.innerHTML = listText;
 </script>
