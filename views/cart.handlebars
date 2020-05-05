@@ -8,6 +8,7 @@
   let cartList = document.getElementById("cartList")
   let listText = "";
   let listCont = [];
+  let listTot = 0;
   //console.log({{{json purchases}}})
   //console.log({{{json groceries}}})
   let cartItems = {{{json purchases}}}
@@ -23,12 +24,14 @@
           price: (inventory[x].price * cartItems[i].amt)
         }
         listCont.push(item);
+        listTot += item.price
       }
     }
   }
   console.log(listCont)
   //string.concat doesn't change the initial string. Going to have to find another way to pull this off.
-  listCont.forEach(object => listText.concat("<li>" + object.name + " x " + object.amt + " : " + object.price + "</li>"))
+  listCont.forEach(object => listText += ("<li>" + object.name + " x " + object.amt + " : " + object.price + "</li>"))
+  listText += "<li id='total'> Total: " + listTot + "</li>"
   console.log(listText)
   cartList.innerHTML = listText;
 </script>
