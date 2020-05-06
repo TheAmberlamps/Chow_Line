@@ -18,3 +18,9 @@ $(".wrap").on("submit", function (event) {
     location.reload();
   });
 });
+
+$(".cartItem").on("submit", function (event) {
+  event.preventDefault();
+  let amt = $(this).context.elements[0].value;
+  console.log(amt);
+});
