@@ -22,5 +22,17 @@ $(".wrap").on("submit", function (event) {
 $(".cartItem").on("submit", function (event) {
   event.preventDefault();
   let amt = $(this).context.elements[0].value;
+  let id = this.id;
   console.log(amt);
+  console.log(id);
+});
+
+$("#purge").on("click", function (event) {
+  event.preventDefault();
+  console.log("Purge running");
+  $.ajax("/api/purge", {
+    type: "POST",
+  }).then(function () {
+    location.reload();
+  });
 });

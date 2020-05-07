@@ -8,15 +8,8 @@ var orm = {
       cb(res);
     });
   },
-  getPrice: function (id, cb) {
-    var queryString = "SELECT price FROM groceries WHERE id=" + id + ";";
-    connection.query(queryString, function (err, res) {
-      if (err) throw err;
-      cb(res);
-    });
-  },
-  insertOne: function (itemID, amt, cb) {
-    console.log("insertOne ORM model running");
+  insertToCart: function (itemID, amt, cb) {
+    console.log("insertToCart ORM model running");
     console.log("item ID: " + itemID);
     console.log("amount: " + amt);
     var queryString =
@@ -30,12 +23,31 @@ var orm = {
       cb(res);
     });
   },
-  updateOne: function (amt, id, cb) {
-    console.log("updateOne ORM model running");
+  updateGroc: function (amt, id, cb) {
+    console.log("updateGroc ORM model running");
     console.log("amount: " + amt);
     console.log("id: " + id);
     var queryString =
       "UPDATE groceries SET inventory =" + amt + " WHERE id=" + id + ";";
+    connection.query(queryString, function (err, res) {
+      if (err) throw err;
+      cb(res);
+    });
+  },
+  updateCart: function (amt, id, cb) {
+    console.log("updateCart ORM model running");
+    console.log("amount:" + amt);
+    console.log("id:" + id);
+    var queryString =
+      "UPDATE cart SET inventory=" + amt + "WHERE id=" + id + ";";
+    connection.query(queryString, function (err, res) {
+      if (err) throw err;
+      cb(res);
+    });
+  },
+  emptyCart: function (cb) {
+    console.log("Emptying cart");
+    var queryString = "TRUNCATE TABLE cart";
     connection.query(queryString, function (err, res) {
       if (err) throw err;
       cb(res);

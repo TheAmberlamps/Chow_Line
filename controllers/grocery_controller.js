@@ -95,4 +95,10 @@ router.post("/api/groceries", function (req, res) {
   });
 });
 
+router.post("/api/purge", function (req, res) {
+  grocery.purgeCart(function (result) {
+    res.json({ id: result.id });
+  });
+});
+
 module.exports = router;
