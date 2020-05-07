@@ -2,6 +2,7 @@ var connection = require("./connection.js");
 
 var orm = {
   selectAll: function (table, cb) {
+    console.log("selectAll ORM model running");
     var queryString = "SELECT * FROM " + table + ";";
     connection.query(queryString, function (err, res) {
       if (err) throw err;
