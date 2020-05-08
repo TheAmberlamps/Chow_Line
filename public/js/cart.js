@@ -24,14 +24,9 @@ $(".cartItem").on("submit", function (event) {
   let amt = parseInt($(this).context.elements[0].value);
   let id = parseInt(this.id);
   let cartInv = parseInt($(this).context.elements[0].max);
-  console.log(cartInv);
   let newInv = null;
   for (let i = 0; i < inventory.length; i++) {
     if (inventory[i].id === id) {
-      console.log("id: " + id);
-      console.log("amt: " + amt);
-      console.log("inventory.id: " + inventory[i].id);
-      console.log("inventory.amt: " + inventory[i].inventory);
       newInv = amt + inventory[i].inventory;
     }
   }
@@ -39,7 +34,6 @@ $(".cartItem").on("submit", function (event) {
     id: id,
     amt: newInv,
   };
-  console.log("grocery.amt: " + grocery.amt);
   $.ajax("/api/updateGroceries", {
     type: "POST",
     data: grocery,

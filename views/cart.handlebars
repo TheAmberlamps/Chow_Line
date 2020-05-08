@@ -34,10 +34,10 @@
   if(listCont.length === 0){
     cartList.innerHTML = "Your cart is empty!"
   }else{
-  console.log(listCont);
   //string.concat doesn't change the initial string. Going to have to find another way to pull this off.
-  //ok, used the plusEquals argument to append everything together. However early testing of the submit buttons has revealed that I have to build every item as an individual form. Need to rewrap them as forms within list items.
-  listCont.forEach(object => listText += ("<li> <form class='cartItem' id='" + object.id + "'>" + object.name + " x " + "<input type='number' class='amt' min='1' max='" + object.amt + "' value='" + object.amt + "'/>" + " : " + object.price + "<button class='btn btn-primary' type='submit'><i class='fas fa-times-circle'></i></button></form></li>"))
+  //ok, used plusEquals to append everything together. However early testing of the submit buttons has revealed that I have to build every item as an individual form. Need to rewrap them as forms within list items.
+  //booyah
+  listCont.forEach(object => listText += ("<li> <form class='cartItem' id='" + object.id + "'>" + object.name + " x " + "<input type='number' class='amt' min='1' max='" + object.amt + "' value='" + object.amt + "'/>" + " : " + object.price + "<button class='btn btn-primary' type='submit'><i class='fas fa-times-circle'> Remove </i></button></form></li>"))
   listText += "<li id='total'> Total: " + listTot + "</li>"
   cartList.innerHTML = listText;}
 </script>

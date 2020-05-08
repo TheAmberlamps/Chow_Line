@@ -11,8 +11,6 @@ let orm = {
   },
   insertToCart: function (itemID, amt, cb) {
     console.log("insertToCart ORM model running");
-    console.log("item ID: " + itemID);
-    console.log("amount: " + amt);
     let queryString =
       "INSERT INTO cart (grocery_id, amt) VALUES (" +
       itemID +
@@ -26,8 +24,6 @@ let orm = {
   },
   updateGroc: function (amt, id, cb) {
     console.log("updateGroc ORM model running");
-    console.log("amount: " + amt);
-    console.log("id: " + id);
     let queryString =
       "UPDATE groceries SET inventory =" + amt + " WHERE id=" + id + ";";
     connection.query(queryString, function (err, res) {
@@ -37,8 +33,6 @@ let orm = {
   },
   updateCart: function (amt, id, cb) {
     console.log("updateCart ORM model running");
-    console.log("amount:" + amt);
-    console.log("id:" + id);
     let queryString =
       "UPDATE cart SET amt=" + amt + " WHERE grocery_id=" + id + ";";
     connection.query(queryString, function (err, res) {
@@ -48,7 +42,6 @@ let orm = {
   },
   removeItem: function (id, cb) {
     console.log("removeItem ORM model running");
-    console.log("id: " + id);
     let queryString = "DELETE FROM cart WHERE grocery_id=" + id + ";";
     connection.query(queryString, function (err, res) {
       if (err) throw err;
