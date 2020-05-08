@@ -26,6 +26,16 @@ var grocery = {
       cb(res);
     });
   },
+  updateCart: function (amt, id, cb) {
+    orm.updateCart(amt, id, function (res) {
+      cb(res);
+    });
+  },
+  removeItem: function (id, cb) {
+    orm.removeItem(id, function (res) {
+      cb(res);
+    });
+  },
   purgeCart: function (cb) {
     orm.emptyCart(function (res) {
       cb(res);

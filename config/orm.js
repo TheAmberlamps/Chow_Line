@@ -1,9 +1,9 @@
-var connection = require("./connection.js");
+let connection = require("./connection.js");
 
-var orm = {
+let orm = {
   selectAll: function (table, cb) {
     console.log("selectAll ORM model running");
-    var queryString = "SELECT * FROM " + table + ";";
+    let queryString = "SELECT * FROM " + table + ";";
     connection.query(queryString, function (err, res) {
       if (err) throw err;
       cb(res);
@@ -13,7 +13,7 @@ var orm = {
     console.log("insertToCart ORM model running");
     console.log("item ID: " + itemID);
     console.log("amount: " + amt);
-    var queryString =
+    let queryString =
       "INSERT INTO cart (grocery_id, amt) VALUES (" +
       itemID +
       ", " +
@@ -28,7 +28,7 @@ var orm = {
     console.log("updateGroc ORM model running");
     console.log("amount: " + amt);
     console.log("id: " + id);
-    var queryString =
+    let queryString =
       "UPDATE groceries SET inventory =" + amt + " WHERE id=" + id + ";";
     connection.query(queryString, function (err, res) {
       if (err) throw err;
@@ -39,8 +39,17 @@ var orm = {
     console.log("updateCart ORM model running");
     console.log("amount:" + amt);
     console.log("id:" + id);
-    var queryString =
-      "UPDATE cart SET inventory=" + amt + "WHERE id=" + id + ";";
+    let queryString =
+      "UPDATE cart SET amt=" + amt + " WHERE grocery_id=" + id + ";";
+    connection.query(queryString, function (err, res) {
+      if (err) throw err;
+      cb(res);
+    });
+  },
+  removeItem: function (id, cb) {
+    console.log("removeItem ORM model running");
+    console.log("id: " + id);
+    let queryString = "DELETE FROM cart WHERE grocery_id=" + id + ";";
     connection.query(queryString, function (err, res) {
       if (err) throw err;
       cb(res);
@@ -48,7 +57,7 @@ var orm = {
   },
   emptyCart: function (cb) {
     console.log("Emptying cart");
-    var queryString = "TRUNCATE TABLE cart";
+    let queryString = "TRUNCATE TABLE cart";
     connection.query(queryString, function (err, res) {
       if (err) throw err;
       cb(res);
