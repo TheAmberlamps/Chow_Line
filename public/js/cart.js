@@ -1,4 +1,5 @@
-// takes items from main db and places them in the cart
+$(document).ready();
+// places items in the cart, then removes them from main db
 $(".wrap").on("submit", function (event) {
   event.preventDefault();
   // get the data needed and make an object to hold it
@@ -8,19 +9,26 @@ $(".wrap").on("submit", function (event) {
     id: $(this).data("id"),
     amt: amt,
   };
-  // post item(s) to cart
+  //check if the item already exists in the cart
+  // if so, update that row
+  // otherwise insert a new one
+
+  // what a mess, having a hell of a time working out how to access the handlebars data needed to run an invenory check from an external JS file.
+  // taking a break from this, going around in circles. Come back with fresh eyes and solve this.
+
+  // post item(s) to cart db
   $.ajax("/api/popCart", {
     type: "POST",
     data: grocery,
   });
-  // remove that amount of items from db
+  // remove that amount of items from main db
   grocery.amt = inv - amt;
   $.ajax("/api/updateGroceries", {
     type: "POST",
     data: grocery,
     // and then reload page
   }).then(function () {
-    location.reload();
+    // location.reload();
   });
 });
 

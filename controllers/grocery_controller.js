@@ -15,55 +15,85 @@ router.get("/", function (req, res) {
 });
 
 router.get("/produce", function (req, res) {
+  var hbsObject = {
+    purchases: null,
+    groceries: null,
+  };
+  grocery.getCart(function (data) {
+    hbsObject.purchases = data;
+  });
   grocery.selectAllFood(function (data) {
-    var hbsObject = {
-      groceries: data,
-    };
+    hbsObject.groceries = data;
     res.render("produce", hbsObject);
   });
 });
 
 router.get("/dairy", function (req, res) {
+  var hbsObject = {
+    purchases: null,
+    groceries: null,
+  };
+  grocery.getCart(function (data) {
+    hbsObject.purchases = data;
+  });
   grocery.selectAllFood(function (data) {
-    var hbsObject = {
-      groceries: data,
-    };
+    hbsObject.groceries = data;
     res.render("dairy", hbsObject);
   });
 });
 
 router.get("/meat&seafood", function (req, res) {
+  var hbsObject = {
+    purchases: null,
+    groceries: null,
+  };
+  grocery.getCart(function (data) {
+    hbsObject.purchases = data;
+  });
   grocery.selectAllFood(function (data) {
-    var hbsObject = {
-      groceries: data,
-    };
+    hbsObject.groceries = data;
     res.render("meat", hbsObject);
   });
 });
 
 router.get("/pantry", function (req, res) {
+  var hbsObject = {
+    purchases: null,
+    groceries: null,
+  };
+  grocery.getCart(function (data) {
+    hbsObject.purchases = data;
+  });
   grocery.selectAllFood(function (data) {
-    var hbsObject = {
-      groceries: data,
-    };
+    hbsObject.groceries = data;
     res.render("pantry", hbsObject);
   });
 });
 
 router.get("/bakery", function (req, res) {
+  var hbsObject = {
+    purchases: null,
+    groceries: null,
+  };
+  grocery.getCart(function (data) {
+    hbsObject.purchases = data;
+  });
   grocery.selectAllFood(function (data) {
-    var hbsObject = {
-      groceries: data,
-    };
+    hbsObject.groceries = data;
     res.render("bakery", hbsObject);
   });
 });
 
 router.get("/frozen", function (req, res) {
+  var hbsObject = {
+    purchases: null,
+    groceries: null,
+  };
+  grocery.getCart(function (data) {
+    hbsObject.purchases = data;
+  });
   grocery.selectAllFood(function (data) {
-    var hbsObject = {
-      groceries: data,
-    };
+    hbsObject.groceries = data;
     res.render("frozen", hbsObject);
   });
 });
@@ -79,6 +109,21 @@ router.get("/cart", function (req, res) {
   grocery.selectAllFood(function (data) {
     hbsObject.groceries = data;
     res.render("cart", hbsObject);
+  });
+});
+
+router.get("/api/cartCheck", function (req, res) {
+  grocery.selectAllFood(function (data) {
+    var hbsObject = {
+      groceries: data,
+    };
+    res.json({ groceries: hbsObject });
+  });
+});
+
+router.get("/api/updateCart", function (req, res) {
+  grocery.updateCart(req.body.amt, req.body.id, function (result) {
+    res.json({ id: result.id });
   });
 });
 
