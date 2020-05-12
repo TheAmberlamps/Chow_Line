@@ -113,7 +113,7 @@ router.get("/cart", function (req, res) {
 });
 
 router.get("/api/cartCheck", function (req, res) {
-  grocery.selectAllFood(function (data) {
+  grocery.getCart(function (data) {
     var hbsObject = {
       groceries: data,
     };

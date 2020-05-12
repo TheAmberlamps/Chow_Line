@@ -9,18 +9,47 @@ $(".wrap").on("submit", function (event) {
     id: $(this).data("id"),
     amt: amt,
   };
+
+  console.log(grocery);
+
+  // what a fuckin mess... OK, so here's the problem as it stands: when the cartCheck is successful, a for loop checks if it's the first entry in the db and creates a new row if it is. if the entry shares the id of a previous one, that one gets updated instead. HOWEVER, /popCart/ ALWAYS runs after the for loop, which fucks up update by adding the item again. ALSO, because of the async nature of ajax the arithmetic that supplies the new inventory value for the main db is executed BEFORE cart population, resulting in the new inventory value being passed as the amount being purchased.
+
+  // I suppose I can sidestep that problem by creating different objects to be passed to different ajax functions instead of modifying a single value multiple times...
+
   //check if the item already exists in the cart
-  // if so, update that row
-  // otherwise insert a new one
+  $.ajax("/api/cartCheck", {
+    type: "GET",
+    success: function (response) {
+      console.log(response.groceries.groceries);
 
-  // what a mess, having a hell of a time working out how to access the handlebars data needed to run an invenory check from an external JS file.
-  // taking a break from this, going around in circles. Come back with fresh eyes and solve this.
+      let manifest = response.groceries.groceries;
 
-  // post item(s) to cart db
-  $.ajax("/api/popCart", {
-    type: "POST",
-    data: grocery,
+      console.log(manifest);
+
+      for (let i = 0; i < manifest.length; i++) {
+        if (manifest.length === 0) {
+          console.log("populating empty cart");
+          $.ajax("/api/popCart", {
+            type: "POST",
+            data: grocery,
+          });
+        } else if (grocery.id === manifest[i].grocery_id) {
+          // if not, insert a new one
+          console.log("updating cart");
+          $.ajax("/api/updateCart", {
+            type: "POST",
+            data: grocery,
+          });
+        }
+      }
+      console.log("populating cart");
+      $.ajax("/api/popCart", {
+        type: "POST",
+        data: grocery,
+      });
+    },
   });
+
   // remove that amount of items from main db
   grocery.amt = inv - amt;
   $.ajax("/api/updateGroceries", {
