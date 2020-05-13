@@ -2,19 +2,36 @@ $(document).ready();
 // places items in the cart, then removes them from main db
 $(".wrap").on("submit", function (event) {
   event.preventDefault();
-  // get the data needed and make an object to hold it
+  // get the data needed and make objects to hold it
   let amt = $(this).context.elements[0].value;
   let inv = $(this).data("inv");
-  let grocery = {
+
+  let newCartItem = {
     id: $(this).data("id"),
     amt: amt,
   };
 
-  console.log(grocery);
+  let updateCartItem = {
+    id: $(this).data("id"),
+    amt: null,
+  };
+
+  let groceryItem = {
+    id: $(this).data("id"),
+    amt: inv - amt,
+  };
+
+  console.log(newCartItem);
 
   // what a fuckin mess... OK, so here's the problem as it stands: when the cartCheck is successful, a for loop checks if it's the first entry in the db and creates a new row if it is. if the entry shares the id of a previous one, that one gets updated instead. HOWEVER, /popCart/ ALWAYS runs after the for loop, which fucks up update by adding the item again. ALSO, because of the async nature of ajax the arithmetic that supplies the new inventory value for the main db is executed BEFORE cart population, resulting in the new inventory value being passed as the amount being purchased.
 
   // I suppose I can sidestep that problem by creating different objects to be passed to different ajax functions instead of modifying a single value multiple times...
+
+  // Good, so that worked. I still need to work out how to only run population if update doesn't run... maybe a boolean switch?
+
+  let updateCheck = 0;
+
+  // Yep, that did it!
 
   //check if the item already exists in the cart
   $.ajax("/api/cartCheck", {
@@ -27,37 +44,36 @@ $(".wrap").on("submit", function (event) {
       console.log(manifest);
 
       for (let i = 0; i < manifest.length; i++) {
-        if (manifest.length === 0) {
-          console.log("populating empty cart");
-          $.ajax("/api/popCart", {
-            type: "POST",
-            data: grocery,
-          });
-        } else if (grocery.id === manifest[i].grocery_id) {
+        if (updateCartItem.id === manifest[i].grocery_id) {
           // if not, insert a new one
+          updateCartItem.amt = parseInt(amt) + parseInt(manifest[i].amt);
+          updateCheck = 1;
           console.log("updating cart");
           $.ajax("/api/updateCart", {
             type: "POST",
-            data: grocery,
+            data: updateCartItem,
           });
         }
       }
-      console.log("populating cart");
-      $.ajax("/api/popCart", {
-        type: "POST",
-        data: grocery,
-      });
+      if (updateCheck === 0) {
+        console.log("populating cart");
+        $.ajax("/api/popCart", {
+          type: "POST",
+          data: newCartItem,
+        });
+      }
     },
   });
 
   // remove that amount of items from main db
-  grocery.amt = inv - amt;
   $.ajax("/api/updateGroceries", {
     type: "POST",
-    data: grocery,
+    data: groceryItem,
     // and then reload page
   }).then(function () {
-    // location.reload();
+    updateCheck = 0;
+    manifest = [];
+    location.reload();
   });
 });
 
@@ -112,6 +128,7 @@ $(".cartItem").on("submit", function (event) {
 $("#purge").on("click", function (event) {
   event.preventDefault();
   console.log("Purge running");
+  manifest = [];
   // insert repop code here, thinking of a for loop that will iterate through all cart items and run /api/updateCart for each of them before purging cart.
   $.ajax("/api/purge", {
     type: "POST",
