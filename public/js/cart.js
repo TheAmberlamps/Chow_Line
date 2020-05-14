@@ -23,7 +23,7 @@ $(".wrap").on("submit", function (event) {
 
   console.log(newCartItem);
 
-  // what a fuckin mess... OK, so here's the problem as it stands: when the cartCheck is successful, a for loop checks if it's the first entry in the db and creates a new row if it is. if the entry shares the id of a previous one, that one gets updated instead. HOWEVER, /popCart/ ALWAYS runs after the for loop, which fucks up update by adding the item again. ALSO, because of the async nature of ajax the arithmetic that supplies the new inventory value for the main db is executed BEFORE cart population, resulting in the new inventory value being passed as the amount being purchased.
+  // what a mess... OK, so here's the problem as it stands: when the cartCheck is successful, a for loop checks if it's the first entry in the db and creates a new row if it is. if the entry shares the id of a previous one, that one gets updated instead. HOWEVER, /popCart/ ALWAYS runs after the for loop, which screws up update by adding the item again. ALSO, because of the async nature of ajax the arithmetic that supplies the new inventory value for the main db is executed BEFORE cart population, resulting in the new inventory value being passed as the amount being purchased.
 
   // I suppose I can sidestep that problem by creating different objects to be passed to different ajax functions instead of modifying a single value multiple times...
 
@@ -128,11 +128,44 @@ $(".cartItem").on("submit", function (event) {
 $("#purge").on("click", function (event) {
   event.preventDefault();
   console.log("Purge running");
-  manifest = [];
-  // insert repop code here, thinking of a for loop that will iterate through all cart items and run /api/updateCart for each of them before purging cart.
-  $.ajax("/api/purge", {
-    type: "POST",
-  }).then(function () {
-    location.reload();
+
+  let cartItem = {
+    id: null,
+    amt: null,
+  };
+
+  $.ajax("/api/cartCheck", {
+    type: "GET",
+    success: function (response) {
+      let cart = response.groceries.groceries;
+
+      $.ajax("/api/grocCheck", {
+        type: "GET",
+        success: function (response) {
+          let inventory = response.inventory.inventory;
+        },
+      });
+
+      for (let i = 0; i < cart.length; i++) {
+        cartItem.id = cart[i].grocery_id;
+        invId = cart[i].grocery_id;
+        console.log("invId: " + invId);
+        console.log("cart amt: " + cart[i].amt);
+        console.log("inventory amt: " + inventory[invId - 1].inventory);
+        cartItem.amt =
+          parseInt(cart[i].amt) + parseInt(inventory[invId - 1].inventory);
+        console.log("cartItem.id: " + cartItem.id);
+        console.log("cartItem.amt " + cartItem.amt);
+        $.ajax("/api/updateGroceries", {
+          type: "POST",
+          data: cartItem,
+        });
+      }
+      $.ajax("/api/purge", {
+        type: "POST",
+      }).then(function () {
+        location.reload();
+      });
+    },
   });
 });

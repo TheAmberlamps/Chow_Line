@@ -121,6 +121,15 @@ router.get("/api/cartCheck", function (req, res) {
   });
 });
 
+router.get("/api/grocCheck", function (req, res) {
+  grocery.selectAllFood(function (data) {
+    var hbsObject = {
+      inventory: data,
+    };
+    res.json({ inventory: hbsObject });
+  });
+});
+
 router.get("/api/updateCart", function (req, res) {
   grocery.updateCart(req.body.amt, req.body.id, function (result) {
     res.json({ id: result.id });
