@@ -132,6 +132,15 @@ router.get("/signup", function (req, res) {
   });
 });
 
+router.get("/api/userCheck", function (req, res) {
+  grocery.selectAllUsers(function (data) {
+    var hbsObject = {
+      users: data,
+    };
+    res.json({ users: hbsObject });
+  });
+});
+
 router.get("/api/cartCheck", function (req, res) {
   grocery.getCart(function (data) {
     var hbsObject = {
