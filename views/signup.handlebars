@@ -6,26 +6,44 @@
   <input id="name" type="text" name="name">
   <label for="#email">Email address: </label>
   <input id="email" type="email" name="email">
+  <label for="#address">Shipping address: </label>
+  <input id="address" type="text" name="address">
   <label for="#password">Password: </label>
   <input id="password" type="password" name="password">
-  <button id="submit" type="submit">Submit</button>
+  <label for="#conf">Confirm password: </label>
+  <input id="conf" type="password" name="passConf">
+  <button id="sub" type="submit">Submit</button>
   </form>
   </div>
   </div>
   </div>
 
   <script>
-
-  // beginnings of a user check, should probably implement this on sign-in first since we have a user already
-  
-  // $.ajax("/api/userCheck", {type: "GET",}
-
-  $("#submit").on("submit", function(event) {
-    event.preventDefault()
-    let name = document.getElementById("#name");
-    let email = document.getElementById("#email");
-    let password = document.getElementById("#password");
-
-  })
-
+  $("#sub").on("click", function (event) {
+    event.preventDefault();
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let address = document.getElementById("address").value;
+    let password = document.getElementById("password").value;
+    let conf = document.getElementById("conf").value;
+    console.log(name);
+    console.log(email);
+    console.log(password);
+    if(password === conf){
+      console.log("Passwords match")
+    }
+    $.ajax("/api/userCheck", {
+      type: "GET",
+      success: function (res) {
+        let users = res.users.users;
+        for (let i=0; i < users.length; i++) {
+          if (name === users[i].user_name) {
+            console.log("This name has already been taken, please choose another.")
+          }else if(email === users[i].email) {
+            console.log("This email is already registered to an account.")
+          }
+        }
+      }
+    });
+  });
   </script>

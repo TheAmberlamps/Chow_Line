@@ -1,15 +1,39 @@
 <div class="col">
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-<form>
-  <label for="#email">Email: </label>
-  <input id="email" type="email" name="Email">
-  <label for="#password">Password: </label>
-  <input id="password" type="password" name="Password">
-  <button type="submit" id="submit">Submit</button>
-</form>
-<p>Don't have an account? <a href="/signup">Sign Up</a> here!
-</p>
+  <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <form>
+        <label for="#email">Email: </label>
+        <input id="email" type="email" name="Email">
+        <label for="#password">Password: </label>
+        <input id="password" type="password" name="Password">
+        <button type="submit" id="submit">Submit</button>
+      </form>
+    <p>Don't have an account? <a href="/signup">Sign Up</a> here!</p>
+    </div>
+  </div>
 </div>
-</div>
-</div>
+
+<script>
+  $("#submit").on("click", function(event) {
+  let email = document.getElementById("email").value;
+  let pass = document.getElementById("password").value;
+    event.preventDefault();
+    $.ajax("/api/userCheck", {
+      type: "GET",
+      success: function(res) {
+        console.log(res.users.users)
+        let users = res.users.users;
+        for (let i=0; i < users.length; i++) {
+          console.log("Running at index " + [i])
+          console.log(email)
+          console.log(users[i].email)
+          console.log(pass)
+          console.log(users[i].pass)
+          if (email === users[i].email && pass === users[i].pass) {
+            console.log("Login accepted!");
+          }
+        }
+      }
+    })
+  }); 
+</script>
