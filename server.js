@@ -4,7 +4,13 @@ var hbs = require("handlebars");
 
 var exphbs = require("express-handlebars");
 
+var bodyParser = require("body-parser");
+
+var session = require("express-session");
+
 var app = express();
+
+var db = require("./models");
 
 var PORT = process.env.PORT || 8080;
 
@@ -12,8 +18,8 @@ var PORT = process.env.PORT || 8080;
 app.use(express.static("public"));
 
 // Parse application body as JSON
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 hbs.registerHelper("ifCond", function (v1, operator, v2, options) {
@@ -53,7 +59,9 @@ var routes = require("./controllers/grocery_controller.js");
 app.use(routes);
 
 // Start our server so that it can begin listening to client requests.
-app.listen(PORT, function () {
-  // Log (server-side) when our server has started
-  console.log("Server listening on: http://localhost:" + PORT);
+db.sequelize.sync().then(function () {
+  app.listen(PORT, function () {
+    // Log (server-side) when our server has started
+    console.log("Server listening on: http://localhost:" + PORT);
+  });
 });
