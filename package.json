@@ -27,6 +27,7 @@
     "handlebars": "^4.7.3",
     "jsonfile": "^6.0.1",
     "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "sequelize": "^5.21.10"

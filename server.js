@@ -8,6 +8,8 @@ var bodyParser = require("body-parser");
 
 var session = require("express-session");
 
+var passport = require("./config/passport");
+
 var app = express();
 
 var db = require("./models");
@@ -20,6 +22,13 @@ app.use(express.static("public"));
 // Parse application body as JSON
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// passport setup
+app.use(
+  session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 hbs.registerHelper("ifCond", function (v1, operator, v2, options) {
@@ -57,6 +66,8 @@ app.set("view engine", "handlebars");
 var routes = require("./controllers/grocery_controller.js");
 
 app.use(routes);
+
+require("./routes/api-routes.js")(app);
 
 // Start our server so that it can begin listening to client requests.
 db.sequelize.sync().then(function () {

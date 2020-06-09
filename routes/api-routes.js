@@ -1,4 +1,4 @@
-// OK, just copy/pasted this code out of the dev.to tutorial, comparing it against Madeline's code I can see that this is going to take some serious customization. We're on the right track though, since the instructions I'm sollowing seem to have ben implemented in our final project, and that worked fine.
+// OK, just copy/pasted this code out of the dev.to tutorial, comparing it against Madeline's code I can see that this is going to take some serious customization. We're on the right track though, since the instructions I'm following seem to have been implemented in our final project, and that worked fine.
 
 // Requiring our models and passport as we've configured it
 var db = require("../models");
@@ -12,7 +12,8 @@ module.exports = function (app) {
     // Since we're doing a POST with javascript, we can't actually redirect that post into a GET request
     // So we're sending the user back the route to the members page because the redirect will happen on the front end
     // They won't get this or even be able to access this page if they aren't authed
-    res.json("/members");
+    res.json(req.user);
+    res.json("/cart");
   });
   //
   // Route for signing up a user. The user's password is automatically hashed and stored securely thanks to
@@ -21,11 +22,15 @@ module.exports = function (app) {
   app.post("/api/signup", function (req, res) {
     console.log(req.body);
     db.User.create({
+      user_name: req.body.user_name,
+      pass: req.body.password,
       email: req.body.email,
-      password: req.body.password,
+      address: req.body.address,
     })
-      .then(function () {
-        res.redirect(307, "/api/login");
+      // adding the dbItem argument from Spartan Meet and the json response as well, we'll see how well this plays out
+      .then(function (dbItem) {
+        res.redirect(307, "/");
+        res.json(dbItem);
       })
       .catch(function (err) {
         console.log(err);
@@ -49,8 +54,10 @@ module.exports = function (app) {
       // Otherwise send back the user's email and id
       // Sending back a password, even a hashed password, isn't a good idea
       res.json({
-        email: req.user.email,
         id: req.user.id,
+        name: req.user.user_name,
+        email: req.user.email,
+        address: req.user.address,
       });
     }
   });
