@@ -112,35 +112,6 @@ router.get("/cart", function (req, res) {
   });
 });
 
-router.get("/login", function (req, res) {
-  var hbsObject = {
-    users: null,
-  };
-  grocery.selectAllUsers(function (data) {
-    hbsObject.users = data;
-    res.render("login", hbsObject);
-  });
-});
-
-router.get("/signup", function (req, res) {
-  var hbsObject = {
-    users: null,
-  };
-  grocery.selectAllUsers(function (data) {
-    hbsObject.users = data;
-    res.render("signup", hbsObject);
-  });
-});
-
-router.get("/api/userCheck", function (req, res) {
-  grocery.selectAllUsers(function (data) {
-    var hbsObject = {
-      users: data,
-    };
-    res.json({ users: hbsObject });
-  });
-});
-
 router.get("/api/cartCheck", function (req, res) {
   grocery.getCart(function (data) {
     var hbsObject = {

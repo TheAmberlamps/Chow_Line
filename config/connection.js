@@ -5,11 +5,11 @@ var connection = mysql.createConnection({
   port: 3306,
   user: "root",
   password: "br4nch&st3m",
-  database: "grocery_db",
+  database: "grocery_db"
 });
 
 // Make connection.
-connection.connect(function (err) {
+connection.connect(function(err) {
   if (err) {
     console.error("error connecting: " + err.stack);
     return;
